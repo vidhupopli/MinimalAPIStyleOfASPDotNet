@@ -8,6 +8,7 @@ class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddControllers(); //You need this Service for app.MapControllers()
 
         var app = builder.Build();
 
@@ -17,30 +18,9 @@ class Program
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection(); //Middleware: If HTTP port request has been recd, redirect to HTTPS port.
+        app.UseHttpsRedirection();
 
-        app.MapGet("/shirts", () => {
-            return "Returning all the shirts";
-        });
-
-        app.MapGet("/shirts/{ShirtId}", (int ShirtId) => {
-            return $"Returning this shirt: {ShirtId}";
-        });
-
-        app.MapPost("/shirts", (Shirt shirt) => {
-            return Results.Json(shirt);
-        });
-
-        app.MapPut("/shirts/{ShirtId}", (int ShirtId) =>
-        {
-            return $"Updating this shirt: {ShirtId}";
-        });
-
-        app.MapDelete("/shirts/{ShirtId}", (int ShirtId) =>
-        {
-            return $"Deleting this shirt: {ShirtId}";
-        });
-
+        app.MapControllers();
         app.Run();
     }
 }
