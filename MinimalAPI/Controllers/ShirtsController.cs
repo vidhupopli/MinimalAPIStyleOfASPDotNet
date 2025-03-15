@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MinimalAPI.Controllers
 {
@@ -23,6 +24,18 @@ namespace MinimalAPI.Controllers
             }
 
             return $"Route param: ${Id}";
+        }
+
+        [HttpGet]
+        [Route("secret")]
+        public string GetSecretShirt([FromHeader(Name = "Authorization")] string? authorization)
+        {
+            if (string.IsNullOrEmpty(authorization))
+            {
+                return "You are not authorized!";
+            }
+
+            return "Here is your secret shirt";
         }
         
         [HttpPost]
