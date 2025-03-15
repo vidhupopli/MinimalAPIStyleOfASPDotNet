@@ -1,34 +1,27 @@
 namespace MinimalAPISolution
 {
-class Program
-{
-    public static void Main(string[] args)
+    class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddControllers(); //You need this Service for app.MapControllers()
-
-        var app = builder.Build();
-
-        if (app.Environment.IsDevelopment())
+        public static void Main(string[] args)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers(); //You need this Service for app.MapControllers()
+
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.MapControllers(); // Individual mapping individual method and route here, utilize controllers.
+            app.Run();
         }
-
-        app.UseHttpsRedirection();
-
-        app.MapControllers();
-        app.Run();
-    }
-}
-
-    record Shirt
-    {
-        public int Id { get; set; }
-        public string? Color { get; set; }
-        public char Size { get; set; }
     }
 }

@@ -18,8 +18,7 @@ namespace MinimalAPI.Controllers
             return "Creating Shirt";
         }
 
-        [HttpGet]
-        [Route("{Id}")]
+        [HttpGet("{Id}")] // In case you do not want to use Route attribute.
         public string GetSpecificShirt(int Id)
         {
             return $"Specific Shirt: {Id}";
