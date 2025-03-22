@@ -1,10 +1,11 @@
-﻿using System.Net;
+﻿// Controllers are just files that define the endpoint spec.
 using Microsoft.AspNetCore.Mvc;
+using MinimalAPI.Models;
 
 namespace MinimalAPI.Controllers
 {
     [ApiController]
-    [Route("api/shirts")]
+    [Route("api/shirts")] // This is an attribute we may use both at class level and the method level. It defines the path spec.
     public class ShirtsController: ControllerBase
     {
         // Query params means you do not use separate routes. You utilize existing ones.
@@ -15,7 +16,7 @@ namespace MinimalAPI.Controllers
             return string.IsNullOrEmpty(Id) ? "All the shirts!" : $"Shirt fetched from query: {Id}";
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}")] // This is path spec using a param.
         public string GetSpecificShirt([FromRoute] int Id, [FromQuery] string? color)
         {
             if (!string.IsNullOrEmpty(color))
@@ -27,7 +28,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpGet]
-        [Route("secret")]
+        [Route("secret")] // Defines path spec.
         public string GetSecretShirt([FromHeader(Name = "Authorization")] string? authorization)
         {
             if (string.IsNullOrEmpty(authorization))
@@ -39,9 +40,10 @@ namespace MinimalAPI.Controllers
         }
         
         [HttpPost]
-        public string CreateSpecificShirt()
+        public string CreateSpecificShirt([FromBody] Shirt shirt) // By default this is JSON.
+        //public string CreateSpecificShirt([FromForm] Shirt shirt) // Instead of JSON, you can get Form Data
         {
-            return "Creating Shirt";
+            return $"{shirt.ShirtId} - {shirt.Color} - {shirt.Size} - {shirt.Price}";
         }
 
         [HttpPut]

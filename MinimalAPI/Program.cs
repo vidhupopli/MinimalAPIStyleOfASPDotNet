@@ -8,7 +8,7 @@ namespace MinimalAPISolution
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers(); //You need this Service for app.MapControllers()
+            builder.Services.AddControllers(); //You need this Service for app.MapControllers() to work.
 
             var app = builder.Build();
 
@@ -20,6 +20,7 @@ namespace MinimalAPISolution
 
             app.UseHttpsRedirection();
 
+            // If you were doing minimal API completely, then instead of app.MapControllers(), you would be creating spec for individual routes here.
             app.MapControllers(); // Individual mapping individual method and route here, utilize controllers.
             app.Run();
         }
