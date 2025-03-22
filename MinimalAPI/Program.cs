@@ -10,6 +10,11 @@ namespace MinimalAPISolution
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers(); //You need this Service for app.MapControllers() to work.
 
+            // We want the output of Console.WriteLine()
+            builder.Logging
+                .AddConsole()
+                .AddDebug();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
