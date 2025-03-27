@@ -8,7 +8,7 @@ namespace MinimalAPI.Models
     {
         //public required int RandomNumber { get; set; } // If you put required then it is required.
         [Required]
-        public string? ShirtId { get; set; }
+        public int ShirtId { get; set; }
         [Required] // If you do not want to use the required keyword, you can use this attribute as well for Model validation.
         public string? Color { get; set; }
         [Shirt_EnsureCorrectSizing] // Custom Attribute

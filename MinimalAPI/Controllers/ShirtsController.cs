@@ -11,17 +11,38 @@ namespace MinimalAPI.Controllers
     {
         private readonly ILogger<ShirtsController> _logger;
 
+        private List<Shirt> ShirtsDb = new List<Shirt>()
+        {
+            new Shirt() { ShirtId=1, Color="Red", Size="XL", Gender="Male", Price=2000 },
+            new Shirt() { ShirtId=2, Color="Blue", Size="XXL", Gender="Male", Price=3000 },
+            new Shirt() { ShirtId=3, Color="Pink", Size="M", Gender="Female", Price=4000 }
+        };
+
         public ShirtsController(ILogger<ShirtsController> logger)
         {
             _logger = logger;
         }
 
-        // Query params means you do not use separate routes. You utilize existing ones.
-        // Here this is a generic route.
         [HttpGet]
-        public string GetShirts([FromQuery] string? Id)
+        public IActionResult GetShirts([FromQuery] int? Id)
         {
-            return string.IsNullOrEmpty(Id) ? "All the shirts!" : $"Shirt fetched from query: {Id}";
+            if (Id == null)
+            {
+                return Ok(ShirtsDb);
+            }
+               
+            if (Id < 0)
+            {
+                return BadRequest();
+            }
+
+            var FoundShirt = ShirtsDb.FirstOrDefault(ShirtInstance => ShirtInstance.ShirtId == Id);
+            if (FoundShirt == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(FoundShirt);
         }
 
         [HttpGet("{Id}")] // This is path spec using a param.
